@@ -3,36 +3,35 @@ using FluentAssertions;
 using GSalvi.Utility.Validations;
 using Xunit;
 
-namespace GSalvi.Utility.UnitTests.Validations
+namespace GSalvi.Utility.UnitTests.Validations;
+
+public class OnlyCharsTests
 {
-    public class OnlyCharsTests
+    [Fact]
+    public void HasOnlyChars_ShouldValidateCorrectly()
     {
-        [Fact]
-        public void HasOnlyChars()
+        var wrong = new List<(string? Actual, char[] Expected)>
         {
-            var wrong = new List<(string Actual, char[] Expected)>
-            {
-                ("abc 123", "321cba".ToCharArray())
-            };
+            ("abc 123", "321cba".ToCharArray())
+        };
 
-            wrong.ForEach(x =>
-            {
-                var (actual, expected) = x;
-                var result = CommonValidations.HasOnlyChars(actual, expected);
-                result.Should().BeFalse();
-            });
+        wrong.ForEach(x =>
+        {
+            var (actual, expected) = x;
+            var result = CommonValidations.HasOnlyChars(actual, expected);
+            result.Should().BeFalse();
+        });
 
-            var right = new List<(string Actual, char[] Expected)>
-            {
-                ("abc 123", " 321cba".ToCharArray())
-            };
+        var right = new List<(string? Actual, char[] Expected)>
+        {
+            ("abc 123", " 321cba".ToCharArray())
+        };
 
-            right.ForEach(x =>
-            {
-                var (actual, expected) = x;
-                var result = CommonValidations.HasOnlyChars(actual, expected);
-                result.Should().BeTrue();
-            });
-        }
+        right.ForEach(x =>
+        {
+            var (actual, expected) = x;
+            var result = CommonValidations.HasOnlyChars(actual, expected);
+            result.Should().BeTrue();
+        });
     }
 }

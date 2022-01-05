@@ -3,39 +3,38 @@ using FluentAssertions;
 using GSalvi.Utility.Validations;
 using Xunit;
 
-namespace GSalvi.Utility.UnitTests.Validations
+namespace GSalvi.Utility.UnitTests.Validations;
+
+public class OnlyDigitsTests
 {
-    public class OnlyDigitsTests
+    [Fact]
+    public void IsOnlyDigits_ShouldValidateCorrectly()
     {
-        [Fact]
-        public void IsOnlyDigits()
+        var wrong = new List<string?>
         {
-            var wrong = new List<string>
-            {
-                null,
-                "",
-                " ",
-                "123Abc",
-                "123!@",
-                "123 456"
-            };
+            null,
+            "",
+            " ",
+            "123Abc",
+            "123!@",
+            "123 456"
+        };
 
-            wrong.ForEach(x =>
-            {
-                var result = CommonValidations.IsOnlyDigits(x);
-                result.Should().BeFalse();
-            });
+        wrong.ForEach(x =>
+        {
+            var result = CommonValidations.IsOnlyDigits(x);
+            result.Should().BeFalse();
+        });
 
-            var right = new List<string>
-            {
-                "123"
-            };
+        var right = new List<string>
+        {
+            "123"
+        };
 
-            right.ForEach(x =>
-            {
-                var result = CommonValidations.IsOnlyDigits(x);
-                result.Should().BeTrue();
-            });
-        }
+        right.ForEach(x =>
+        {
+            var result = CommonValidations.IsOnlyDigits(x);
+            result.Should().BeTrue();
+        });
     }
 }
